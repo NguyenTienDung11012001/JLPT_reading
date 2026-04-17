@@ -130,6 +130,41 @@ main {
 /* ── Loading / error ─────────────────────────── */
 .msg { color: #888; font-style: italic; margin-top: 40px; }
 
+/* ── Furigana popup ──────────────────────────── */
+#furi-popup {
+  display: none;
+  position: fixed;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 18px 14px 18px;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.18);
+  z-index: 500;
+  min-width: 180px;
+  max-width: 320px;
+  border-top: 3px solid var(--accent);
+}
+#furi-popup .fp-word {
+  font-size: 22px; font-weight: bold; margin-bottom: 4px;
+}
+#furi-popup .fp-reading {
+  font-size: 14px; color: var(--accent); margin-bottom: 6px; font-family: "Yu Gothic", sans-serif;
+}
+#furi-popup .fp-meaning {
+  font-size: 15px; color: #333;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  border-top: 1px solid #eee; padding-top: 8px; margin-top: 4px;
+}
+#furi-popup .fp-src {
+  font-size: 11px; color: #bbb; margin-top: 6px;
+}
+#furi-popup .fp-close {
+  position: absolute; top: 8px; right: 10px;
+  background: none; border: none; font-size: 15px;
+  cursor: pointer; color: #bbb; line-height: 1;
+  padding: 2px 4px;
+}
+#furi-popup .fp-close:hover { color: #666; }
+
 /* ── Mobile ──────────────────────────────────── */
 @media (max-width: 800px) {
   #sidebar { transform: translateX(-100%); transition: transform .25s; }
@@ -154,6 +189,14 @@ main {
 <div id="overlay"></div>
 <button id="menu-btn">☰</button>
 
+<div id="furi-popup">
+  <button class="fp-close" id="furi-close">×</button>
+  <div class="fp-word" id="fp-word"></div>
+  <div class="fp-reading" id="fp-reading"></div>
+  <div class="fp-meaning" id="fp-meaning"></div>
+  <div class="fp-src" id="fp-src"></div>
+</div>
+
 <main>
   <div id="content"><p class="msg">Đang tải danh sách bài...</p></div>
 </main>
@@ -162,6 +205,7 @@ main {
 const PLACEHOLDER = "Di chuột qua một câu tiếng Nhật để xem bản dịch...";
 const transText = document.getElementById('trans-text');
 let currentId = null;
+let currentVocabDict = {};
 
 // ── Mobile sidebar ────────────────────────────
 const sidebar = document.getElementById('sidebar');
@@ -218,9 +262,112 @@ function splitVI(text) {
   return parts.map(s => s.trim()).filter(Boolean).map(s => s.endsWith('.') ? s : s + '.');
 }
 
+// ── Vocab dictionary ──────────────────────────
+function buildVocabDict(vocabArr) {
+  const dict = {};
+  for (const entry of vocabArr) {
+    const m = entry.match(/^(.+?)\s*(?:\((.+?)\))?\s*:\s*(.+)$/);
+    if (m) dict[m[1].trim()] = { reading: (m[2] || '').trim(), meaning: m[3].trim() };
+  }
+  return dict;
+}
+
+// ── Jisho API lookup ──────────────────────────
+async function lookupJisho(word) {
+  try {
+    const res = await fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(word)}`);
+    const json = await res.json();
+    if (!json.data?.length) return null;
+    const item = json.data[0];
+    const jpEntry = item.japanese.find(j => j.word === word) || item.japanese[0];
+    return {
+      reading: jpEntry?.reading || '',
+      english: item.senses[0]?.english_definitions?.slice(0, 3).join(', ') || ''
+    };
+  } catch { return null; }
+}
+
+// ── Furigana popup ────────────────────────────
+const furiPopup = document.getElementById('furi-popup');
+const fpWord    = document.getElementById('fp-word');
+const fpReading = document.getElementById('fp-reading');
+const fpMeaning = document.getElementById('fp-meaning');
+const fpSrc     = document.getElementById('fp-src');
+
+document.getElementById('furi-close').addEventListener('click', hideFuri);
+
+function hideFuri() { furiPopup.style.display = 'none'; }
+
+function showFuri(word, rect) {
+  fpWord.textContent    = word;
+  fpReading.textContent = '...';
+  fpMeaning.textContent = '';
+  fpSrc.textContent     = '';
+  furiPopup.style.display = 'block';
+  placePopup(rect);
+
+  const vocab = currentVocabDict[word];
+  if (vocab) {
+    fpReading.textContent = vocab.reading ? `【${vocab.reading}】` : '';
+    fpMeaning.textContent = vocab.meaning;
+    fpSrc.textContent     = '★ từ vựng bài học';
+    return;
+  }
+
+  lookupJisho(word).then(r => {
+    if (r) {
+      fpReading.textContent = r.reading ? `【${r.reading}】` : '';
+      fpMeaning.textContent = r.english;
+      fpSrc.textContent     = 'Nguồn: Jisho';
+    } else {
+      fpReading.textContent = '';
+      fpMeaning.textContent = '(không tìm thấy)';
+      fpSrc.textContent     = '';
+    }
+  });
+}
+
+function placePopup(rect) {
+  const pad = 8;
+  let top  = rect.bottom + pad;
+  let left = rect.left;
+
+  furiPopup.style.top  = top  + 'px';
+  furiPopup.style.left = left + 'px';
+
+  requestAnimationFrame(() => {
+    const pw = furiPopup.offsetWidth;
+    const ph = furiPopup.offsetHeight;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    if (left + pw > vw - pad) furiPopup.style.left = (vw - pw - pad) + 'px';
+    if (top  + ph > vh - pad) furiPopup.style.top  = (rect.top - ph - pad) + 'px';
+  });
+}
+
+// Selection on Japanese paragraph
+document.addEventListener('mouseup', e => {
+  if (e.target.closest('#furi-popup')) return;
+  const sel  = window.getSelection();
+  const word = sel.toString().trim();
+  if (!word) { hideFuri(); return; }
+
+  const jpPara = document.getElementById('jp-para');
+  if (!jpPara) return;
+  const range = sel.rangeCount > 0 ? sel.getRangeAt(0) : null;
+  if (!range || !jpPara.contains(range.commonAncestorContainer)) { hideFuri(); return; }
+
+  showFuri(word, range.getBoundingClientRect());
+});
+
+document.addEventListener('mousedown', e => {
+  if (!e.target.closest('#furi-popup')) hideFuri();
+});
+
 // ── Render lesson ─────────────────────────────
 function renderLesson(data) {
   const content = document.getElementById('content');
+  currentVocabDict = buildVocabDict(data.vocab);
   const jpSentences = splitJP(data.japanese);
   const viSentences = splitVI(data.vietnamese);
 
