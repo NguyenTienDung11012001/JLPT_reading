@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Tiếng Nhật</title>
+<style>
+:root {
+  --trans-h: 88px;
+  --sidebar-w: 270px;
+  --accent: #e07b5a;
+  --bg: #f6f4ef;
+  --sidebar-bg: #1a1a2e;
+  --trans-bg: #0f0f1a;
+  --text: #1e1e1e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Yu Gothic", "Hiragino Sans", "Meiryo", "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+
+/* ── Translation box ─────────────────────────── */
+#trans-box {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--trans-h);
+  background: var(--trans-bg);
+  color: #fff;
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 24px;
+  border-bottom: 3px solid var(--accent);
+  z-index: 300;
+}
+#trans-box .lbl {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--accent); white-space: nowrap; flex-shrink: 0;
+  writing-mode: horizontal-tb;
+}
+#trans-text {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-size: 16px; line-height: 1.55; color: #fff;
+  transition: opacity 0.15s;
+}
+#trans-text.empty { color: #555; font-style: italic; }
+
+/* ── Sidebar ─────────────────────────────────── */
+#sidebar {
+  position: fixed;
+  top: var(--trans-h); left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--sidebar-bg);
+  overflow-y: auto; z-index: 200; color: #ccc;
+  display: flex; flex-direction: column;
+}
+#sidebar-header {
+  padding: 14px 16px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--accent); text-transform: uppercase;
+  border-bottom: 1px solid #2a2a40; flex-shrink: 0;
+}
+#lesson-list { list-style: none; padding: 6px 0; flex: 1; }
+#lesson-list li {
+  padding: 9px 16px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background 0.12s, border-color 0.12s;
+  font-size: 13px; line-height: 1.4;
+}
+#lesson-list li:hover { background: #252540; color: #fff; }
+#lesson-list li.active { background: #252540; border-left-color: var(--accent); color: #fff; }
+#lesson-list li .num { color: #555; font-size: 11px; margin-right: 6px; }
+#lesson-list li.active .num { color: var(--accent); }
+
+/* ── Main ────────────────────────────────────── */
+main {
+  margin-left: var(--sidebar-w);
+  margin-top: var(--trans-h);
+  padding: 40px 52px 64px;
+  max-width: calc(860px + var(--sidebar-w));
+}
+#content { max-width: 760px; }
+
+#menu-btn {
+  display: none;
+  position: fixed;
+  top: calc(var(--trans-h) + 10px); right: 14px;
+  width: 38px; height: 38px;
+  align-items: center; justify-content: center;
+  background: var(--sidebar-bg); color: #fff;
+  border: none; border-radius: 6px;
+  font-size: 18px; cursor: pointer; z-index: 250;
+}
+
+#overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.5); z-index: 190;
+}
+#overlay.show { display: block; }
+
+/* ── Content typography ──────────────────────── */
+.lesson-title { font-size: 26px; margin-bottom: 4px; }
+.lesson-subtitle { color: #666; font-size: 15px; margin-bottom: 4px; }
+.lesson-meta { color: #999; font-size: 13px; margin-bottom: 32px; }
+.section-title {
+  font-size: 17px;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 6px; margin: 30px 0 16px;
+  color: #333;
+}
+
+/* ── Japanese sentences ──────────────────────── */
+#jp-para { font-size: 18px; line-height: 2.1; }
+.jp-s {
+  cursor: pointer;
+  padding: 1px 2px; border-radius: 3px;
+  transition: background 0.12s;
+}
+.jp-s:hover, .jp-s.hl { background: #ffe599; }
+
+/* ── Vocabulary ──────────────────────────────── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px 24px;
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+  list-style: none;
+}
+.vocab-grid li { font-size: 15px; }
+
+/* ── Loading / error ─────────────────────────── */
+.msg { color: #888; font-style: italic; margin-top: 40px; }
+
+/* ── Mobile ──────────────────────────────────── */
+@media (max-width: 800px) {
+  #sidebar { transform: translateX(-100%); transition: transform .25s; }
+  #sidebar.open { transform: translateX(0); }
+  #menu-btn { display: flex; }
+  main { margin-left: 0; padding: 24px 20px 48px; }
+}
+</style>
+</head>
+<body>
+
+<div id="trans-box">
+  <span class="lbl">DỊCH</span>
+  <span id="trans-text" class="empty">Di chuột qua một câu tiếng Nhật để xem bản dịch...</span>
+</div>
+
+<aside id="sidebar">
+  <div id="sidebar-header">Danh sách bài</div>
+  <ul id="lesson-list"></ul>
+</aside>
+
+<div id="overlay"></div>
+<button id="menu-btn">☰</button>
+
+<main>
+  <div id="content"><p class="msg">Đang tải danh sách bài...</p></div>
+</main>
+
+<script>
+const PLACEHOLDER = "Di chuột qua một câu tiếng Nhật để xem bản dịch...";
+const transText = document.getElementById('trans-text');
+let currentId = null;
+
+// ── Mobile sidebar ────────────────────────────
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+document.getElementById('menu-btn').addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', closeSidebar);
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+}
+
+// ── Markdown parser ───────────────────────────
+function parseMarkdown(text) {
+  const r = { title: '', subtitle: '', japanese: '', vietnamese: '', vocab: [] };
+  const lines = text.split('\n');
+  let cur = null, bufs = {};
+
+  for (const line of lines) {
+    const t = line.trim();
+    if (/^# [^#]/.test(t)) {
+      r.title = t.slice(2).trim();
+    } else if (t.startsWith('## ')) {
+      cur = t.slice(3).trim();
+      if (!bufs[cur]) bufs[cur] = [];
+    } else if (cur && t && t !== '---') {
+      bufs[cur].push(t);
+    }
+  }
+
+  const keys = Object.keys(bufs);
+  if (keys[0]) r.subtitle = keys[0];
+
+  const jpKey = keys.find(k => k.includes('日本語'));
+  if (jpKey) r.japanese = bufs[jpKey].join(' ').replace(/\*\*/g, '').trim();
+
+  const viKey = keys.find(k => k.includes('Tiếng Việt'));
+  if (viKey) r.vietnamese = bufs[viKey].join(' ').replace(/\*\*/g, '').trim();
+
+  const vocabKey = keys.find(k => k.includes('Từ Vựng') || k.includes('単語'));
+  if (vocabKey) r.vocab = bufs[vocabKey].filter(l => l.startsWith('-')).map(l => l.slice(1).trim());
+
+  return r;
+}
+
+// ── Sentence splitting ────────────────────────
+function splitJP(text) {
+  return text.split('。').filter(s => s.trim()).map(s => s.trim() + '。');
+}
+function splitVI(text) {
+  const parts = text.split(/(?<=\.)\s+/);
+  return parts.map(s => s.trim()).filter(Boolean).map(s => s.endsWith('.') ? s : s + '.');
+}
+
+// ── Render lesson ─────────────────────────────
+function renderLesson(data) {
+  const content = document.getElementById('content');
+  const jpSentences = splitJP(data.japanese);
+  const viSentences = splitVI(data.vietnamese);
+
+  let jpHTML = '';
+  jpSentences.forEach((s, i) => {
+    const vi = viSentences[i] || '';
+    const escaped = s.replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    const viEscaped = vi.replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    jpHTML += `<span class="jp-s" data-vi="${viEscaped}">${escaped}</span>`;
+  });
+
+  let vocabHTML = data.vocab.map(v => `<li>${v}</li>`).join('');
+
+  content.innerHTML = `
+    <h1 class="lesson-title">${data.title}</h1>
+    <p class="lesson-subtitle">${data.subtitle}</p>
+    <p class="lesson-meta"><strong>Sempai Việt</strong> — Tiếng Nhật Cũng Zui</p>
+    <h2 class="section-title">日本語</h2>
+    <p id="jp-para">${jpHTML}</p>
+    ${vocabHTML ? `<h2 class="section-title">Từ Vựng / 単語</h2><ul class="vocab-grid">${vocabHTML}</ul>` : ''}
+  `;
+
+  // Hover events
+  document.querySelectorAll('.jp-s').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      const vi = el.dataset.vi;
+      if (vi) {
+        transText.textContent = vi;
+        transText.classList.remove('empty');
+      }
+      el.classList.add('hl');
+    });
+    el.addEventListener('mouseleave', () => {
+      el.classList.remove('hl');
+    });
+  });
+
+  // Reset translation box
+  transText.textContent = PLACEHOLDER;
+  transText.classList.add('empty');
+}
+
+// ── Load lesson from file ─────────────────────
+async function loadLesson(lesson) {
+  if (currentId === lesson.id) return;
+  currentId = lesson.id;
+  history.replaceState(null, '', '#' + lesson.id);
+
+  document.querySelectorAll('#lesson-list li').forEach(li => {
+    li.classList.toggle('active', li.dataset.id === lesson.id);
+  });
+
+  try {
+    const res = await fetch(lesson.file);
+    if (!res.ok) throw new Error('Không tải được file');
+    const text = await res.text();
+    renderLesson(parseMarkdown(text));
+  } catch (e) {
+    document.getElementById('content').innerHTML = `<p class="msg">Lỗi: ${e.message}</p>`;
+  }
+}
+
+// ── Init ──────────────────────────────────────
+async function init() {
+  const res = await fetch('lessons.json');
+  const lessons = await res.json();
+
+  const ul = document.getElementById('lesson-list');
+  lessons.forEach(lesson => {
+    const li = document.createElement('li');
+    li.dataset.id = lesson.id;
+    li.innerHTML = `<span class="num">Bài ${lesson.num}</span>${lesson.title}`;
+    li.addEventListener('click', () => { loadLesson(lesson); closeSidebar(); });
+    ul.appendChild(li);
+  });
+
+  const hash = location.hash.slice(1);
+  const initial = lessons.find(l => l.id === hash) || lessons[0];
+  if (initial) loadLesson(initial);
+}
+
+init().catch(e => {
+  document.getElementById('content').innerHTML = `<p class="msg">Lỗi khởi động: ${e.message}</p>`;
+});
+</script>
+</body>
+</html>

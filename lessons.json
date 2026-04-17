@@ -1,0 +1,366 @@
+[
+  {
+    "id": "bai_1",
+    "num": 1,
+    "title": "子供の未来と母国の文化",
+    "subtitle": "TƯƠNG LAI CON CÁI VÀ VĂN HÓA NƯỚC NHÀ",
+    "file": "lessons/bai_1.md"
+  },
+  {
+    "id": "bai_2",
+    "num": 2,
+    "title": "ジョギングする服",
+    "subtitle": "TRANG PHỤC CHẠY BỘ",
+    "file": "lessons/bai_2.md"
+  },
+  {
+    "id": "bai_3",
+    "num": 3,
+    "title": "神社のお祭りで",
+    "subtitle": "Ở LỄ HỘI ĐỀN THỜ",
+    "file": "lessons/bai_3.md"
+  },
+  {
+    "id": "bai_4",
+    "num": 4,
+    "title": "つまらない仕事",
+    "subtitle": "CÔNG VIỆC NHÀM CHÁN",
+    "file": "lessons/bai_4.md"
+  },
+  {
+    "id": "bai_5",
+    "num": 5,
+    "title": "私のお弁当作り",
+    "subtitle": "VIỆC LÀM CƠM HỘP CỦA TÔI",
+    "file": "lessons/bai_5.md"
+  },
+  {
+    "id": "bai_6",
+    "num": 6,
+    "title": "いつもの電車",
+    "subtitle": "CHUYÊN TÀU ĐIỆN THƯỜNG NGÀY",
+    "file": "lessons/bai_6.md"
+  },
+  {
+    "id": "bai_7",
+    "num": 7,
+    "title": "会社の寮",
+    "subtitle": "KỲ TỨC XÁ CỦA CÔNG TY",
+    "file": "lessons/bai_7.md"
+  },
+  {
+    "id": "bai_8",
+    "num": 8,
+    "title": "私の先輩",
+    "subtitle": "TIỀN BỐI CỦA TÔI",
+    "file": "lessons/bai_8.md"
+  },
+  {
+    "id": "bai_9",
+    "num": 9,
+    "title": "私の日曜日",
+    "subtitle": "NGÀY CHỦ NHẬT CỦA TÔI",
+    "file": "lessons/bai_9.md"
+  },
+  {
+    "id": "bai_10",
+    "num": 10,
+    "title": "公衆電話",
+    "subtitle": "ĐIỆN THOẠI CÔNG CỘNG",
+    "file": "lessons/bai_10.md"
+  },
+  {
+    "id": "bai_11",
+    "num": 11,
+    "title": "体を動かすこと",
+    "subtitle": "VIỆC VẬN ĐỘNG CƠ THỂ",
+    "file": "lessons/bai_11.md"
+  },
+  {
+    "id": "bai_12",
+    "num": 12,
+    "title": "若い者のテレビの見方",
+    "subtitle": "CÁCH GIỚI TRẺ XEM TI VI",
+    "file": "lessons/bai_12.md"
+  },
+  {
+    "id": "bai_13",
+    "num": 13,
+    "title": "いっしょに住みませんか",
+    "subtitle": "CÙNG NHAU CHUNG SỐNG NHỨ",
+    "file": "lessons/bai_13.md"
+  },
+  {
+    "id": "bai_14",
+    "num": 14,
+    "title": "電気の安全チェック",
+    "subtitle": "KIỂM TRA AN TOÀN ĐIỆN",
+    "file": "lessons/bai_14.md"
+  },
+  {
+    "id": "bai_15",
+    "num": 15,
+    "title": "節電しよう",
+    "subtitle": "TIẾT KIỂM ĐIỆN",
+    "file": "lessons/bai_15.md"
+  },
+  {
+    "id": "bai_16",
+    "num": 16,
+    "title": "果物を買う",
+    "subtitle": "MUA TRÁI CÂY",
+    "file": "lessons/bai_16.md"
+  },
+  {
+    "id": "bai_17",
+    "num": 17,
+    "title": "私の家の米作り",
+    "subtitle": "VIỆC TRỒNG LÚA CỦA NHÀ TÔI",
+    "file": "lessons/bai_17.md"
+  },
+  {
+    "id": "bai_18",
+    "num": 18,
+    "title": "「シェアハウス」",
+    "subtitle": "NHÀ Ở GHÉP",
+    "file": "lessons/bai_18.md"
+  },
+  {
+    "id": "bai_19",
+    "num": 19,
+    "title": "デパート",
+    "subtitle": "TRUNG TÂM THƯƠNG MẠI",
+    "file": "lessons/bai_19.md"
+  },
+  {
+    "id": "bai_20",
+    "num": 20,
+    "title": "梅雨のアジサイ",
+    "subtitle": "HOA CẨM TÚ CẦU VÀO MƯA MƯA",
+    "file": "lessons/bai_20.md"
+  },
+  {
+    "id": "bai_21",
+    "num": 21,
+    "title": "私の誕生日",
+    "subtitle": "NGÀY SINH NHẬT CỦA TÔI",
+    "file": "lessons/bai_21.md"
+  },
+  {
+    "id": "bai_22",
+    "num": 22,
+    "title": "日本の漫画",
+    "subtitle": "TRUYỆN TRANH CỦA NHẬT BẢN",
+    "file": "lessons/bai_22.md"
+  },
+  {
+    "id": "bai_23",
+    "num": 23,
+    "title": "私が住んでいる町",
+    "subtitle": "THỊ TRẤN NƠI TÔI ĐANG SỐNG",
+    "file": "lessons/bai_23.md"
+  },
+  {
+    "id": "bai_24",
+    "num": 24,
+    "title": "日本のラーメン屋",
+    "subtitle": "TIỆM MÌ Ở NHẬT BẢN",
+    "file": "lessons/bai_24.md"
+  },
+  {
+    "id": "bai_25",
+    "num": 25,
+    "title": "雨の日の拾い猫",
+    "subtitle": "CHỦ MÈO NHẶT ĐƯỢC VÀO NGÀY MƯA",
+    "file": "lessons/bai_25.md"
+  },
+  {
+    "id": "bai_26",
+    "num": 26,
+    "title": "先輩になる",
+    "subtitle": "TRỞ THÀNH TIỀN BỐI",
+    "file": "lessons/bai_26.md"
+  },
+  {
+    "id": "bai_27",
+    "num": 27,
+    "title": "日本でアルバイトをする",
+    "subtitle": "LÀM THÊM Ở NHẬT BẢN",
+    "file": "lessons/bai_27.md"
+  },
+  {
+    "id": "bai_28",
+    "num": 28,
+    "title": "写真を撮る趣味",
+    "subtitle": "SỞ THÍCH CHỤP ẢNH",
+    "file": "lessons/bai_28.md"
+  },
+  {
+    "id": "bai_29",
+    "num": 29,
+    "title": "超越紙",
+    "subtitle": "GIẤY SIÊU VIỆT",
+    "file": "lessons/bai_29.md"
+  },
+  {
+    "id": "bai_30",
+    "num": 30,
+    "title": "バスで席を譲る",
+    "subtitle": "NHƯỜNG CHỖ TRÊN XE BUÝT",
+    "file": "lessons/bai_30.md"
+  },
+  {
+    "id": "bai_31",
+    "num": 31,
+    "title": "あいさつの大切さ",
+    "subtitle": "TẦM QUAN TRỌNG CỦA VIỆC CHÀO HỎI",
+    "file": "lessons/bai_31.md"
+  },
+  {
+    "id": "bai_32",
+    "num": 32,
+    "title": "病院で料理を作る",
+    "subtitle": "NẤU ĂN Ở BỆNH VIỆN",
+    "file": "lessons/bai_32.md"
+  },
+  {
+    "id": "bai_33",
+    "num": 33,
+    "title": "むかしの景色",
+    "subtitle": "CẢNH VẬT NGÀY XƯA",
+    "file": "lessons/bai_33.md"
+  },
+  {
+    "id": "bai_34",
+    "num": 34,
+    "title": "自転車とバス",
+    "subtitle": "XE ĐẠP VÀ XE BUÝT",
+    "file": "lessons/bai_34.md"
+  },
+  {
+    "id": "bai_35",
+    "num": 35,
+    "title": "国から持ってきたスーツ",
+    "subtitle": "BỘ VEST MANG TỪ NƯỚC MÌNH",
+    "file": "lessons/bai_35.md"
+  },
+  {
+    "id": "bai_36",
+    "num": 36,
+    "title": "アルバイトをする",
+    "subtitle": "ĐI LÀM THÊM",
+    "file": "lessons/bai_36.md"
+  },
+  {
+    "id": "bai_37",
+    "num": 37,
+    "title": "旅館に泊まる",
+    "subtitle": "Ở TRỌ TẠI NHÀ TRỌ KIỂU NHẬT",
+    "file": "lessons/bai_37.md"
+  },
+  {
+    "id": "bai_38",
+    "num": 38,
+    "title": "昔の日本の家",
+    "subtitle": "NGÀY Ở NHÀ NHẬT NGÀY XƯA",
+    "file": "lessons/bai_38.md"
+  },
+  {
+    "id": "bai_39",
+    "num": 39,
+    "title": "父の気持ち",
+    "subtitle": "CẢM XÚC CỦA BỐ",
+    "file": "lessons/bai_39.md"
+  },
+  {
+    "id": "bai_40",
+    "num": 40,
+    "title": "お弁当をつくる仕事",
+    "subtitle": "CÔNG VIỆC LÀM CƠM HỘP",
+    "file": "lessons/bai_40.md"
+  },
+  {
+    "id": "bai_41",
+    "num": 41,
+    "title": "会社に地震がある",
+    "subtitle": "CÓ ĐỘNG ĐẤT Ở CÔNG TY",
+    "file": "lessons/bai_41.md"
+  },
+  {
+    "id": "bai_42",
+    "num": 42,
+    "title": "無水トイレ",
+    "subtitle": "NHÀ VỆ SINH KHÔNG NƯỚC",
+    "file": "lessons/bai_42.md"
+  },
+  {
+    "id": "bai_43",
+    "num": 43,
+    "title": "だれに道を教える",
+    "subtitle": "CHỈ ĐƯỜNG CHO AI ĐÓ",
+    "file": "lessons/bai_43.md"
+  },
+  {
+    "id": "bai_44",
+    "num": 44,
+    "title": "朝の散歩",
+    "subtitle": "DAO BỘ VÀO BUỔI SÁNG",
+    "file": "lessons/bai_44.md"
+  },
+  {
+    "id": "bai_45",
+    "num": 45,
+    "title": "公園のカフェ",
+    "subtitle": "QUÁN CÀ PHÊ Ở CÔNG VIÊN",
+    "file": "lessons/bai_45.md"
+  },
+  {
+    "id": "bai_46",
+    "num": 46,
+    "title": "私のアルバイト",
+    "subtitle": "VIỆC LÀM THÊM CỦA TÔI",
+    "file": "lessons/bai_46.md"
+  },
+  {
+    "id": "bai_47",
+    "num": 47,
+    "title": "生け花教室",
+    "subtitle": "LỚP HỌC CẮM HOA",
+    "file": "lessons/bai_47.md"
+  },
+  {
+    "id": "bai_48",
+    "num": 48,
+    "title": "携帯電話を忘れる",
+    "subtitle": "QUÊN ĐIỆN THOẠI DI ĐỘNG",
+    "file": "lessons/bai_48.md"
+  },
+  {
+    "id": "bai_49",
+    "num": 49,
+    "title": "病気と心",
+    "subtitle": "BỆNH TẬT VÀ TÂM TU",
+    "file": "lessons/bai_49.md"
+  },
+  {
+    "id": "bai_50",
+    "num": 50,
+    "title": "コンビニでの出来事",
+    "subtitle": "CÂU CHUYỆN Ở CỦA HÀNG TIỆN LỢI",
+    "file": "lessons/bai_50.md"
+  },
+  {
+    "id": "bai_51",
+    "num": 51,
+    "title": "天気予報を見る",
+    "subtitle": "XEM DỰ BÁO THỜI TIẾT",
+    "file": "lessons/bai_51.md"
+  },
+  {
+    "id": "bai_52",
+    "num": 52,
+    "title": "品物をかえる",
+    "subtitle": "ĐỔI SẢN PHẨM",
+    "file": "lessons/bai_52.md"
+  }
+]
