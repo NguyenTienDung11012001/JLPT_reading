@@ -319,9 +319,10 @@ function showFuri(word, rect) {
 
   const vocab = findVocabEntry(word);
   if (vocab) {
+    fpWord.textContent    = vocab.matched;
     fpReading.textContent = vocab.reading ? `【${vocab.reading}】` : '';
     fpMeaning.textContent = vocab.meaning;
-    fpSrc.textContent     = vocab.matched === word ? '★ từ vựng bài học' : `★ từ vựng bài học (${vocab.matched})`;
+    fpSrc.textContent     = '★ từ vựng bài học';
     return;
   }
 
