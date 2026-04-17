@@ -287,6 +287,17 @@ async function lookupJisho(word) {
   } catch { return null; }
 }
 
+// ── Vocab fuzzy match ─────────────────────────
+function findVocabEntry(word) {
+  if (currentVocabDict[word]) return { matched: word, ...currentVocabDict[word] };
+  for (const key of Object.keys(currentVocabDict)) {
+    if (word.startsWith(key)) return { matched: key, ...currentVocabDict[key] };
+    const stem = key.length > 2 ? key.slice(0, -1) : '';
+    if (stem && word.startsWith(stem)) return { matched: key, ...currentVocabDict[key] };
+  }
+  return null;
+}
+
 // ── Furigana popup ────────────────────────────
 const furiPopup = document.getElementById('furi-popup');
 const fpWord    = document.getElementById('fp-word');
@@ -306,11 +317,11 @@ function showFuri(word, rect) {
   furiPopup.style.display = 'block';
   placePopup(rect);
 
-  const vocab = currentVocabDict[word];
+  const vocab = findVocabEntry(word);
   if (vocab) {
     fpReading.textContent = vocab.reading ? `【${vocab.reading}】` : '';
     fpMeaning.textContent = vocab.meaning;
-    fpSrc.textContent     = '★ từ vựng bài học';
+    fpSrc.textContent     = vocab.matched === word ? '★ từ vựng bài học' : `★ từ vựng bài học (${vocab.matched})`;
     return;
   }
 
